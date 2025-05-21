@@ -1,0 +1,30 @@
+use BD180225124;
+
+show tables;
+drop table monitoramento_sustentabilidade;
+
+create table funcionarios(
+id int primary key auto_increment,
+nome varchar(100),
+funcao varchar(100),
+salario varchar(100)
+);
+
+create table cliente(
+cpf char(11) unique not null primary key,
+nome varchar(100),
+plano_mensalidade varchar(100),
+status_mensalidade varchar(100)
+);
+
+create table equipamentos(
+id int primary key,
+nome varchar(100),
+manutencao date,
+grupo varchar(100)
+);
+
+create table acompanhamento(
+id int primary key auto_increment
+id_aluno 
+);
