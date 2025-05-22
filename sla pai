@@ -1,21 +1,80 @@
 use BD180225124;
-
 show tables;
-drop table monitoramento_sustentabilidade;
+
 
 create table funcionarios(
 id int primary key auto_increment,
 nome varchar(100),
 funcao varchar(100),
-salario varchar(100)
+salario DECIMAL(10,2)
 );
+
+INSERT INTO funcionarios (nome, funcao, salario) VALUES
+('João Silva', 'Gerente', 3500.00),
+('Maria Oliveira', 'Atendente', 1800.00),
+('Carlos Pereira', 'Instrutor', 2500.00),
+('Fernanda Santos', 'Recepcionista', 2200.00),
+('Lucas Almeida', 'Vendedor', 2000.00),
+('Beatriz Costa', 'Atendente', 1800.00),
+('Rafael Souza', 'Gerente', 4000.00),
+('Paula Lima', 'Instrutora', 2700.00),
+('André Martins', 'Vendedor', 2100.00),
+('Camila Ferreira', 'Recepcionista', 1900.00),
+('Thiago Silva', 'Instrutor', 2500.00),
+('Larissa Gomes', 'Vendedora', 2200.00),
+('Rodrigo Souza', 'Gerente', 3800.00),
+('Mariana Almeida', 'Atendente', 1700.00),
+('Gustavo Oliveira', 'Vendedor', 2300.00);
 
 create table cliente(
 cpf char(11) unique not null primary key,
 nome varchar(100),
-plano_mensalidade varchar(100),
-status_mensalidade varchar(100)
+plano_id INT,  
+status_mensalidade ENUM('em dia', 'pendente', 'atrasado')
 );
+
+INSERT INTO cliente (cpf, nome, plano_id, status_mensalidade) VALUES
+('12345678901', 'João Silva', 1, 'em dia'),
+('23456789012', 'Maria Oliveira', 2, 'pendente'),
+('34567890123', 'Carlos Pereira', 1, 'atrasado'),
+('45678901234', 'Fernanda Santos', 3, 'em dia'),
+('56789012345', 'Lucas Almeida', 2, 'pendente'),
+('67890123456', 'Beatriz Costa', 1, 'atrasado'),
+('78901234567', 'Rafael Souza', 1, 'em dia'),
+('89012345678', 'Paula Lima', 3, 'em dia'),
+('90123456789', 'André Martins', 2, 'pendente'),
+('11223344556', 'Camila Ferreira', 1, 'em dia'),
+('22334455667', 'Thiago Silva', 3, 'atrasado'),
+('33445566778', 'Larissa Gomes', 1, 'pendente'),
+('44556677889', 'Rodrigo Souza', 2, 'em dia'),
+('55667788990', 'Mariana Almeida', 3, 'atrasado'),
+('66778899001', 'Gustavo Oliveira', 1, 'em dia');
+
+
+CREATE TABLE planos (
+id INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(100),
+descricao TEXT,
+preco DECIMAL(8,2)
+);
+
+INSERT INTO planos (nome, descricao, preco) VALUES
+('Plano Básico', 'Plano de acesso simples', 99.99),
+('Plano Intermediário', 'Plano com mais recursos', 149.99),
+('Plano Premium', 'Plano com todos os recursos e benefícios', 199.99),
+('Plano Fitness', 'Plano especial para atividades físicas', 120.00),
+('Plano Corporativo', 'Plano para empresas com mais de 10 funcionários', 250.00),
+('Plano Familiar', 'Plano para famílias com até 4 membros', 180.00),
+('Plano Executivo', 'Plano exclusivo para executivos', 300.00),
+('Plano Estudante', 'Plano com desconto para estudantes', 80.00),
+('Plano Gold', 'Plano com acesso VIP', 220.00),
+('Plano Platinum', 'Plano com vantagens exclusivas', 250.00),
+('Plano Universitário', 'Plano especial para universitários', 90.00),
+('Plano Prime', 'Plano com benefícios extras para clientes fiéis', 200.00),
+('Plano Agendado', 'Plano com acesso agendado por horários', 110.00),
+('Plano Fitness Plus', 'Plano avançado para atividades de alto desempenho', 180.00),
+('Plano Corporativo Plus', 'Plano corporativo com suporte dedicado', 350.00);
+
 
 create table equipamentos(
 id int primary key,
@@ -24,7 +83,167 @@ manutencao date,
 grupo varchar(100)
 );
 
+INSERT INTO equipamentos (id, nome, manutencao, grupo) VALUES
+(1, 'Esteira', '2025-05-10', 'Cardio'),
+(2, 'Bicicleta Ergométrica', '2025-06-15', 'Cardio'),
+(3, 'Haltere 10kg', '2025-07-01', 'Pesos'),
+(4, 'Haltere 5kg', '2025-05-20', 'Pesos'),
+(5, 'Caminhão de Leg Press', '2025-08-30', 'Força'),
+(6, 'Mesa de Supino', '2025-09-15', 'Força'),
+(7, 'Máquina de Remada', '2025-07-10', 'Força'),
+(8, 'Máquina de Puxada', '2025-06-20', 'Força'),
+(9, 'Bicicleta Spinning', '2025-06-05', 'Cardio'),
+(10, 'Banco de Supino', '2025-05-25', 'Força'),
+(11, 'Máquina de Agachamento', '2025-06-15', 'Força'),
+(12, 'Tapis roulant', '2025-05-15', 'Cardio'),
+(13, 'Máquina de Abdominal', '2025-07-20', 'Força'),
+(14, 'Peck Deck', '2025-08-01', 'Força'),
+(15, 'Remo Indoor', '2025-09-30', 'Cardio');
+
+
 create table acompanhamento(
-id int primary key auto_increment
-id_aluno 
+id int primary key auto_increment,
+id_aluno char(11) unique not null,
+data_acompanhamento date,
+peso float,
+percentual_gordura int,
+comentarios text
 );
+
+INSERT INTO acompanhamento (id_aluno, data_acompanhamento, peso, percentual_gordura, comentarios) VALUES
+('12345678901', '2025-05-15', 75.5, 18, 'Precisa melhorar o percentual de gordura'),
+('23456789012', '2025-05-16', 68.3, 22, 'Está progredindo bem no treino'),
+('34567890123', '2025-05-17', 82.0, 25, 'Aumentar intensidade dos exercícios'),
+('45678901234', '2025-05-18', 60.0, 16, 'Excelente forma física'),
+('56789012345', '2025-05-19', 78.2, 20, 'Está melhorando no treino cardiovascular'),
+('67890123456', '2025-05-20', 88.0, 30, 'Precisa perder peso e melhorar a dieta'),
+('78901234567', '2025-05-21', 72.5, 22, 'Melhorando a resistência física'),
+('89012345678', '2025-05-22', 65.5, 19, 'Focado na tonificação muscular'),
+('90123456789', '2025-05-23', 77.0, 24, 'Trabalhar mais o treino de força'),
+('11223344556', '2025-05-24', 82.5, 28, 'Necessário um programa de redução de gordura'),
+('22334455667', '2025-05-25', 69.5, 18, 'Bom desempenho nos últimos acompanhamentos'),
+('33445566778', '2025-05-26', 90.0, 33, 'Precisa melhorar a alimentação'),
+('44556677889', '2025-05-27', 71.2, 21, 'Melhorando no treino de força'),
+('55667788990', '2025-05-28', 78.8, 26, 'Aumentar a intensidade das atividades aeróbicas'),
+('66778899001', '2025-05-29', 63.0, 15, 'Ótimos resultados nos últimos acompanhamentos');
+
+
+create table loja(
+id int primary key,
+nome_produto varchar(100),
+descricao text,
+preco decimal(8,2),
+estoque int
+);
+
+INSERT INTO loja (id, nome_produto, descricao, preco, estoque) VALUES
+(1, 'Camiseta Fitness', 'Camiseta de tecido leve e respirável para treino', 59.90, 50),
+(2, 'Shorts de Corrida', 'Shorts de alta performance para atividades físicas', 79.90, 40),
+(3, 'Tênis de Corrida', 'Tênis com amortecimento para corrida e caminhada', 299.90, 30),
+(4, 'Whey Protein', 'Suplemento proteico para ganho de massa muscular', 189.90, 20),
+(5, 'Shaker', 'Shaker para mistura de suplementos em pó', 29.90, 100),
+(6, 'Faixa de Cabelo', 'Faixa de cabelo para absorver suor durante os treinos', 15.90, 80),
+(7, 'Mochila Fitness', 'Mochila resistente para levar seus itens para a academia', 149.90, 25),
+(8, 'Cinta de Musculação', 'Cinta para suporte na hora do levantamento de peso', 99.90, 15),
+(9, 'Knee Sleeve', 'Manguito para joelho, ajuda a prevenir lesões durante o treino', 79.90, 35),
+(10, 'Luvas de Musculação', 'Luvas de proteção para treino de força', 59.90, 60),
+(11, 'Rolo de Liberação Miofascial', 'Rolo para massagem e liberação de pontos de tensão', 99.90, 40),
+(12, 'Corda de Pular', 'Corda de pular para treino cardiovascular', 39.90, 70),
+(13, 'Manta Térmica', 'Manta para aquecimento ou recuperação muscular pós-treino', 89.90, 10),
+(14, 'Bola de Exercícios', 'Bola para treino de estabilidade e flexibilidade', 120.00, 30),
+(15, 'Saco de Pancada', 'Saco de pancada para treino de boxe e artes marciais', 350.00, 12),
+(16, 'Barra de Ferro', 'Barra de ferro para treino de musculação', 170.00, 50),
+(17, 'Suplemento Creatina', 'Suplemento para melhorar a performance durante treinos intensos', 79.90, 25),
+(18, 'Roupão Fitness', 'Roupão de algodão para pós-treino', 129.90, 15),
+(19, 'Sunga Fitness', 'Sunga de compressão para treino aquático', 49.90, 20),
+(20, 'Bola Medicinal', 'Bola de peso para exercícios de força e resistência', 169.90, 18);
+
+
+
+CREATE TABLE vendas (
+id INT PRIMARY KEY AUTO_INCREMENT,
+id_cliente CHAR(11),  
+id_produto INT,  
+data_venda DATE,  
+quantidade INT,  
+valor_total DECIMAL(10,2)
+);
+
+INSERT INTO vendas (id_cliente, id_produto, data_venda, quantidade, valor_total) VALUES
+('12345678901', 1, '2025-05-10', 1, 2000.00),
+('23456789012', 2, '2025-05-11', 2, 2400.00),
+('34567890123', 3, '2025-05-12', 3, 450.00),
+('45678901234', 4, '2025-05-13', 1, 80.00),
+('56789012345', 5, '2025-05-14', 1, 3500.00),
+('67890123456', 6, '2025-05-15', 2, 5000.00),
+('78901234567', 7, '2025-05-16', 1, 2700.00),
+('89012345678', 8, '2025-05-17', 3, 8400.00),
+('90123456789', 9, '2025-05-18', 1, 2200.00),
+('11223344556', 10, '2025-05-19', 2, 1800.00),
+('22334455667', 11, '2025-05-20', 1, 3200.00),
+('33445566778', 12, '2025-05-21', 1, 1500.00),
+('44556677889', 13, '2025-05-22', 2, 2400.00),
+('55667788990', 14, '2025-05-23', 1, 2200.00),
+('66778899001', 15, '2025-05-24', 1, 1800.00);
+
+
+ALTER TABLE cliente
+ADD CONSTRAINT fk_plano_cliente
+FOREIGN KEY (plano_id) REFERENCES planos(id);
+
+ALTER TABLE acompanhamento
+ADD CONSTRAINT fk_acompanhamento_cliente
+FOREIGN KEY (id_aluno) REFERENCES cliente(cpf);
+
+ALTER TABLE vendas
+ADD CONSTRAINT fk_vendas_cliente
+FOREIGN KEY (id_cliente) REFERENCES cliente(cpf);
+
+ALTER TABLE vendas
+ADD CONSTRAINT fk_vendas_produto
+FOREIGN KEY (id_produto) REFERENCES loja(id);
+
+
+
+
+
+SELECT 
+    v.id AS venda_id,
+    v.data_venda,
+    v.quantidade,
+    v.valor_total,
+    c.nome AS cliente_nome,
+    l.nome_produto AS produto_nome
+FROM vendas v
+JOIN cliente c ON v.id_cliente = c.cpf
+JOIN loja l ON v.id_produto = l.id;
+
+
+SELECT 
+    a.id AS acompanhamento_id,
+    a.data_acompanhamento,
+    a.peso,
+    a.percentual_gordura,
+    c.nome AS aluno_nome
+FROM acompanhamento a
+JOIN cliente c ON a.id_aluno = c.cpf;
+
+
+SELECT 
+    l.id AS produto_id,
+    l.nome_produto,
+    SUM(v.quantidade) AS total_vendido,
+    SUM(v.valor_total) AS total_gerado
+FROM loja l
+LEFT JOIN vendas v ON l.id = v.id_produto
+GROUP BY l.id, l.nome_produto;
+
+
+SELECT 
+    c.nome AS cliente_nome,
+    p.nome AS plano_nome,
+    c.status_mensalidade
+FROM cliente c
+JOIN planos p ON c.plano_id = p.id;
+
+
